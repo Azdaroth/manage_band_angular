@@ -1,0 +1,15 @@
+<div flash-alert active-class="in" class="alert fade">
+  <span class="alert-message">{{flash.message}}</span>
+</div>
+
+<div class="marketing" ng-if="user.id">
+  <p>Hello, {{ user.email }}!</p>
+  <p>Your bands:</p>
+  <ul>
+    <li ng-repeat="band in bands">
+      <a ui-sref='band({id: {{band.id}} })'>
+        {{ band.name }}
+      </a>
+    </li>
+  </ul>
+</div>
