@@ -1,2 +1,16 @@
 <h1>{{ band.name }}</h1>
 
+<create-asset-list asset-lists="assetLists" ng-show="assetLists"></create-asset-list>
+
+<p>Your files:</p>
+
+<div ng-repeat="assetList in assetLists">
+  <p>
+    <b>{{assetList.name}}</b>
+  </p>
+  <div ng-nestable item-changed="assetChanged(item)" ng-model='assetList.assets'>
+    {{$item.text}}
+  </div>
+  <create-asset asset-list="assetList"></create-asset>
+  <hr />
+</div>

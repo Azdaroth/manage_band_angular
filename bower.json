@@ -15,7 +15,8 @@
     "angular-ui-router": "latest",
     "ng-token-auth": "latest",
     "angular-flash": "latest",
-    "restangular": "latest"
+    "restangular": "latest",
+    "ng-nestable": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

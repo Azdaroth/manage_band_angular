@@ -12,6 +12,47 @@ angular.module('manageBandApp')
 
     Band.find($stateParams.id).then(function(band) {
       $scope.band = band;
+      $scope.assetLists = [{
+        name: "Asset List 1",
+        assets: [
+            {
+              item: { text: 'name' },
+              children: [
+                {
+                  item: { text: "name child 1" },
+                  children: []
+                },
+                {
+                  item: { text: "name child 2" },
+                  children: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Asset List 2",
+          assets: [
+            {
+              item: { text: 'name' },
+              children: [
+                {
+                  item: { text: "name child 1" },
+                  children: []
+                },
+                {
+                  item: { text: "name child 2" },
+                  children: []
+                }
+              ]
+            }
+          ]
+        }
+      ]
     });
+
+    $scope.assetChanged = function(item) {
+      console.log(item)
+    };
 
   });

@@ -31,6 +31,7 @@ module.exports = function(config) {
       'bower_components/angular-flash/dist/angular-flash.js',
       'bower_components/restangular/dist/restangular.js',
       'bower_components/lodash/dist/lodash.js',
+      'bower_components/ng-nestable/src/angular-nestable.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

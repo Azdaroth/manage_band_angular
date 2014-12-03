@@ -23,7 +23,8 @@ angular
     'ng-token-auth',
     'angular-flash.service',
     'angular-flash.flash-alert-directive',
-    'restangular'
+    'restangular',
+    'ng-nestable'
   ])
   .config(function($authProvider, ENV) {
     $authProvider.configure({
