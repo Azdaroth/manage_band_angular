@@ -24,7 +24,8 @@ angular
     'angular-flash.service',
     'angular-flash.flash-alert-directive',
     'restangular',
-    'ng-nestable'
+    'ng-nestable',
+    'angularFileUpload'
   ])
   .config(function($authProvider, ENV) {
     $authProvider.configure({

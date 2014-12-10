@@ -99,12 +99,13 @@
         defaultOptions = value;
       };
     })
-    .directive('ngNestable', ['$compile', '$nestable', function($compile, $nestable){
+    .directive('ngNestable', ['$compile', '$nestable', function($compile, $nestable) {
       return {
         restrict: 'A',
         require: 'ngModel',
         scope: {
-          itemChanged: "&"
+          itemChanged: "&",
+          list: "="
         },
         compile: function(element){
           var itemTemplate = element.html();
@@ -115,11 +116,20 @@
               $nestable.defaultOptions,
               $scope.$eval($attrs.ngNestable)
             );
+            // Added code
+            var collectionChangesCounter = 0;
+            //
             $scope.$watchCollection(function(){
               return $ngModel.$modelValue;
-            }, function(model){
+            }, function(model, oldModel) {
               if(model){
 
+                /**
+                  Added code to handle change
+                  callbacks and counter not to make request when collection loads
+                */
+                collectionChangesCounter > 0 && $scope.itemChanged && $scope.itemChanged({list: $scope.list, item: model});
+                collectionChangesCounter += 1;
                 /**
                  * we are running the formatters here instead of watching on $viewValue because our model is an Array
                  * and angularjs ngModel watcher watches for "shallow" changes and otherwise the possible formatters wouldn't
@@ -134,7 +144,7 @@
                 root.on('change', function(){
                   $ngModel.$setViewValue(root.nestable('serialize'));
                   $scope && $scope.$root && $scope.$root.$$phase || $scope.$apply();
-                  $scope.itemChanged && $scope.itemChanged({item: model});
+
                 });
               }
             });
@@ -191,7 +201,7 @@
     return {
       scope: true,
       require: '^ngNestable',
-      link: function($scope, $element){
+      link: function($scope, $element) {
         $scope[$nestable.modelName] = $element.parent().data('item');
       }
     };

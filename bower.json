@@ -16,7 +16,8 @@
     "ng-token-auth": "latest",
     "angular-flash": "latest",
     "restangular": "latest",
-    "ng-nestable": "latest"
+    "ng-nestable": "latest",
+    "angular-file-upload": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

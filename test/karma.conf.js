@@ -32,6 +32,7 @@ module.exports = function(config) {
       'bower_components/restangular/dist/restangular.js',
       'bower_components/lodash/dist/lodash.js',
       'bower_components/ng-nestable/src/angular-nestable.js',
+      'bower_components/angular-file-upload/angular-file-upload.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

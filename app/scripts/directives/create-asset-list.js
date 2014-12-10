@@ -7,7 +7,7 @@
  * # createAssetList
  */
 angular.module('manageBandApp')
-  .directive('createAssetList', function () {
+  .directive('createAssetList', function (AssetList) {
     return {
       template:
       '<div class="create-asset-list">' +
@@ -22,6 +22,7 @@ angular.module('manageBandApp')
       '</div>',
       restrict: 'E',
       scope: {
+        band: "=",
         assetLists: "="
       },
       link: function postLink(scope, element, attrs) {
@@ -36,6 +37,7 @@ angular.module('manageBandApp')
 
         scope.createAssetList = function() {
           scope.assetLists.push(scope.newAssetList);
+          AssetList.create(scope.band, scope.newAssetList);
           loadNewAssetList();
         }
       }

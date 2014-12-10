@@ -1,16 +1,16 @@
 <h1>{{ band.name }}</h1>
 
-<create-asset-list asset-lists="assetLists" ng-show="assetLists"></create-asset-list>
+<create-asset-list band="band" asset-lists="assetLists" ng-show="assetLists"></create-asset-list>
 
 <p>Your files:</p>
 
-<div ng-repeat="assetList in assetLists">
+<div ng-repeat="assetList in assetLists" ng-if="assetLists">
   <p>
     <b>{{assetList.name}}</b>
   </p>
-  <div ng-nestable item-changed="assetChanged(item)" ng-model='assetList.assets'>
-    {{$item.text}}
+  <div ng-nestable list="assetList" item-changed="assetChanged(list, item)" ng-model='assetList.assets_without_parent'>
+    {{$item.name}}
   </div>
-  <create-asset asset-list="assetList"></create-asset>
+  <create-asset asset-list="assetList" band="band"></create-asset>
   <hr />
 </div>
