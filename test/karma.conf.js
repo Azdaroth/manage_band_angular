@@ -33,6 +33,11 @@ module.exports = function(config) {
       'bower_components/lodash/dist/lodash.js',
       'bower_components/ng-nestable/src/angular-nestable.js',
       'bower_components/angular-file-upload/angular-file-upload.js',
+      'bower_components/jquery/jquery.js',
+      'bower_components/jquery-ui/ui/jquery-ui.js',
+      'bower_components/fullcalendar/fullcalendar.js',
+      'bower_components/angular-ui-calendar/src/calendar.js',
+      'bower_components/ng-sortable/dist/ng-sortable.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

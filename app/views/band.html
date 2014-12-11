@@ -14,3 +14,13 @@
   <create-asset asset-list="assetList" band="band"></create-asset>
   <hr />
 </div>
+
+
+<div ui-calendar ng-model="eventSources"></div>
+
+<ul data-as-sortable="dragControlListeners" data-ng-model="items">
+   <li data-ng-repeat="item in items" data-as-sortable-item>
+   		{{ item.name }}
+      <div data-as-sortable-item-handle></div>
+   </li>
+</ul>
