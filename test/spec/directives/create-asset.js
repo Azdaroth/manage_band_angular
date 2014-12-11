@@ -42,7 +42,7 @@ describe('Directive: createAsset', function () {
   };
 
   newAsset = {
-    item: {},
+    item: { name: "", asset_attachment_id: "" },
     children: []
   };
 
