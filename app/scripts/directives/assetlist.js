@@ -9,9 +9,9 @@
 angular.module('manageBandApp')
   .directive('assetList', function (AssetList) {
     return {
-      template: '<p><b>' +
+      template: '<span><b>' +
                   '<a href="#" editable-text="assetList.name" onbeforesave="updateAssetListName($data)">{{ assetList.name || "empty" }}</a>' +
-                '</b></p>',
+                '</b></span>',
       restrict: 'E',
       scope: {
         band: "=",

@@ -11,7 +11,7 @@ angular.module('manageBandApp')
     return {
       template:
       '<span class="destroy-asset">' +
-        '<a href="javascript:void(0);" ng-click="destroyAsset()">' +
+        '<a href="javascript:void(0);" ng-really-click="destroyAsset()" ng-really-message="Are you sure you want to delete the asset?">' +
           '<i class="fa fa-trash"></i>' +
         '</a>' +
       '</span>',

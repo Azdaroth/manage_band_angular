@@ -34,11 +34,19 @@ angular.module('manageBandApp')
                         .patch({"asset_list": params}) ;
     };
 
+    var destroy = function(band, assetList) {
+      return Restangular
+        .one('bands', band.id)
+        .one('asset_lists', assetList.id)
+        .remove();
+    };
+
     return {
       all:  all,
       find: find,
       create: create,
-      update: update
+      update: update,
+      destroy: destroy
     };
 
   });

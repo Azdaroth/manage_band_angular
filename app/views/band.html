@@ -6,6 +6,7 @@
 
 <div ng-repeat="assetList in assetLists" ng-if="assetLists">
   <asset-list band="band" asset-list="assetList"></asset-list>
+  <destroy-asset-list band="band" asset-lists="assetLists" asset-list="assetList"></destroy-asset-list>
   <div ng-nestable list="assetList" item-changed="assetChanged" ng-model='assetList.assets_without_parent'>
     <a ui-sref="asset({bandId: band.id, assetListId: assetList.id, id: $item.id})">{{ $item.name }}</a>
     <a ng-href="{{$item.file_url}}" target="_blank">

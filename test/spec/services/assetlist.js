@@ -18,11 +18,15 @@ describe('Service: AssetList', function () {
       .respond( { asset_lists: { id: "10" } } );
     httpBackend.when('PATCH', 'http://manage_band.dev/api/v1/bands/1/asset_lists/10.json')
       .respond("updated");
+    httpBackend.when('DELETE', 'http://manage_band.dev/api/v1/bands/1/asset_lists/10.json')
+      .respond("destroyed");
   }));
 
   var band = {
     id: "1"
   };
+
+  var assetList = { id: "10" }
 
   describe("all", function() {
     it("makes call to api to get all assetlists for band", function() {
@@ -55,9 +59,17 @@ describe('Service: AssetList', function () {
 
   describe("update", function() {
     it("makes call to api to update assetlist in band with params", function() {
-      var assetList = { id: "10" }
       AssetList.update(band, assetList, { name: "name" }).then(function(response) {
         expect(response).toEqual("updated");
+      });
+      httpBackend.flush();
+    });
+  });
+
+  describe("destroy", function() {
+    it("makes call to api to destroy assetlist in band", function() {
+      AssetList.destroy(band, assetList).then(function(response) {
+        expect(response).toEqual("destroyed");
       });
       httpBackend.flush();
     });
