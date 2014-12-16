@@ -103,14 +103,19 @@
       return {
         restrict: 'A',
         require: 'ngModel',
-        scope: {
-          itemChanged: "&",
-          list: "="
-        },
-        compile: function(element){
+        scope: true,
+        compile: function(element) {
           var itemTemplate = element.html();
           element.empty();
-          return function($scope, $element, $attrs, $ngModel){
+          return function($scope, $element, $attrs, $ngModel) {
+
+            // feel pretty bad about not using isolate scope here
+            // but there was no other option
+            // especially itemChanged expression is bad here
+
+            $scope.list = $scope.$eval($attrs.list);
+            $scope.itemChanged =  $scope.$eval($attrs.itemChanged);
+
             var options = $.extend(
               {},
               $nestable.defaultOptions,
@@ -119,16 +124,18 @@
             // Added code
             var collectionChangesCounter = 0;
             //
+
             $scope.$watchCollection(function(){
               return $ngModel.$modelValue;
             }, function(model, oldModel) {
-              if(model){
+              if (model) {
 
                 /**
                   Added code to handle change
                   callbacks and counter not to make request when collection loads
                 */
-                collectionChangesCounter > 0 && $scope.itemChanged && $scope.itemChanged({list: $scope.list, item: model});
+
+                collectionChangesCounter > 0 && $scope.itemChanged && $scope.list && $scope.itemChanged($scope.list, model);
                 collectionChangesCounter += 1;
                 /**
                  * we are running the formatters here instead of watching on $viewValue because our model is an Array
@@ -143,8 +150,8 @@
                 root.nestable(options);
                 root.on('change', function(){
                   $ngModel.$setViewValue(root.nestable('serialize'));
-                  $scope && $scope.$root && $scope.$root.$$phase || $scope.$apply();
-
+                  // $scope && $scope.$root && $scope.$root.$$phase ||
+                  $scope.$apply();
                 });
               }
             });
@@ -159,17 +166,19 @@
           var rootList = $('<ol class="dd-list"></ol>').appendTo(root);
         } else {
           var rootList = $('<ol class="dd-empty"></ol>').appendTo(root);
-        }
+        };
 
-        model.forEach(function f(item) {
+        model.forEach(function f(item){
           var list = Array.prototype.slice.call(arguments).slice(-1)[0];
           if(!(list instanceof $)) list = rootList;
-
           var listItem = $('<li class="dd-item"></li>');
-          var listElement = $('<div ng-nestable-item class="dd-handle"></div>');
-          listElement.append(tpl).appendTo(listItem);
+          var listElement = $('<div class="dd-handle dd3-handle"></div>');
+          var nestableItem = $('<div class="ng-nestable-item dd3-content" ng-nestable-item></div>');
+          listElement.appendTo(listItem);
+          nestableItem.append(tpl).appendTo(listItem);
           list.append(listItem);
           listItem.data('item', item.item);
+          listItem.data('aggregate', item);
           if(isArray(item.children) && item.children.length > 0){
             var subRoot = $('<ol class="dd-list"></ol>').appendTo(listItem);
             item.children.forEach(function(item){
@@ -201,8 +210,9 @@
     return {
       scope: true,
       require: '^ngNestable',
-      link: function($scope, $element) {
+      link: function($scope, $element, $attrs) {
         $scope[$nestable.modelName] = $element.parent().data('item');
+        $scope["$aggregate"] = $element.parent().data('aggregate');
       }
     };
   }]);

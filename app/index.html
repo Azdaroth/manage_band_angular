@@ -9,14 +9,14 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css" />
-    <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" type="text/css" href="bower_components/ng-nestable/lib/jquery.nestable.css">
+    <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/jquery.nestable.css">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/ng-nestable/lib/jquery.nestable.css"
-    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.style.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.css">
 
 
     <!-- endbuild -->
@@ -90,24 +90,22 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-cookie/angular-cookie.js"></script>
     <script src="bower_components/ng-token-auth/dist/ng-token-auth.js"></script>
     <script src="bower_components/angular-flash/dist/angular-flash.js"></script>
     <script src="bower_components/lodash/dist/lodash.compat.js"></script>
     <script src="bower_components/restangular/dist/restangular.js"></script>
-    <script src="bower_components/ng-nestable/src/angular-nestable.js"></script>
     <script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
-    <script src="bower_components/ng-sortable/dist/ng-sortable.js"></script>
+    <script src="bower_components/angular-ui-sortable/sortable.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <script src="bower_components/ng-nestable/lib/jquery.nestable.js"></script>
     <script src="scripts/vendor/angular-nestable.js"></script>
-    <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
     <script type="text/javascript" src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
     <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script type="text/javascript" src="bower_components/fullcalendar/fullcalendar.js"></script>
     <script type="text/javascript" src="bower_components/fullcalendar/gcal.js"></script>
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 
 
 
@@ -126,6 +124,12 @@
         <script src="scripts/services/asset.js"></script>
         <script src="scripts/services/assetlist.js"></script>
         <script src="scripts/services/uploadersfactory.js"></script>
+        <script src="scripts/directives/tasklist.js"></script>
+        <script src="scripts/directives/assetlist.js"></script>
+        <script src="scripts/directives/asset.js"></script>
+        <script src="scripts/controllers/asset.js"></script>
+        <script src="scripts/directives/updateassetfile.js"></script>
+        <script src="scripts/directives/destroyasset.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -5,11 +5,13 @@
 <p>Your files:</p>
 
 <div ng-repeat="assetList in assetLists" ng-if="assetLists">
-  <p>
-    <b>{{assetList.name}}</b>
-  </p>
-  <div ng-nestable list="assetList" item-changed="assetChanged(list, item)" ng-model='assetList.assets_without_parent'>
-    {{$item.name}}
+  <asset-list band="band" asset-list="assetList"></asset-list>
+  <div ng-nestable list="assetList" item-changed="assetChanged" ng-model='assetList.assets_without_parent'>
+    <a ui-sref="asset({bandId: band.id, assetListId: assetList.id, id: $item.id})">{{ $item.name }}</a>
+    <a ng-href="{{$item.file_url}}" target="_blank">
+      <i class="fa fa-cloud-download"></i>
+    </a>
+    <destroy-asset band="band" asset-list="assetList" asset="$aggregate"></destroy-asset>
   </div>
   <create-asset asset-list="assetList" band="band"></create-asset>
   <hr />
@@ -18,9 +20,14 @@
 
 <div ui-calendar ng-model="eventSources"></div>
 
-<ul data-as-sortable="dragControlListeners" data-ng-model="items">
-   <li data-ng-repeat="item in items" data-as-sortable-item>
-   		{{ item.name }}
-      <div data-as-sortable-item-handle></div>
-   </li>
-</ul>
+<div class="task-lists-wrapper row">
+  <div class='tasklist col-sm-3' ng-repeat='taskList in taskLists'>
+      <h2>{{ taskList.name }}</h2>
+      <ul ui-sortable="sortableOptions" ng-model="taskList.items" class="tasklist-items">
+        <li ng-if="taskList.items.length === 0" class="empty-task-list-placeholder"></li>
+        <li ng-repeat="item in taskList.items">
+          {{ item.name }}
+        </li>
+      </ul>
+  </div>
+</div>

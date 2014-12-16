@@ -41,6 +41,19 @@ angular.module('manageBandApp')
     };
 
     $scope.eventSources = [];
-    $scope.items = [ { name: "name" }, { name: "name 2" } ];
+
+    $scope.taskLists = [
+    ]
+
+    $scope.sortableOptions = {
+      connectWith: '.tasklist-items',
+      placeholder: 'placeholder',
+      update: function(event, ui) {
+
+      },
+      beforeStop: function(event, ui) {
+
+      }
+    }
 
   });

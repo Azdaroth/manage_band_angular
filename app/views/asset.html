@@ -1,0 +1,9 @@
+<div flash-alert active-class="in" class="alert fade">
+  <span class="alert-message">{{flash.message}}</span>
+</div>
+
+<div>
+  <a ui-sref="band({id: band.id})">Back to the {{band.name}}</a>
+</div>
+<asset band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></asset>
+<update-asset-file band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></update-asset-file>

@@ -26,7 +26,9 @@ angular
     'restangular',
     'ng-nestable',
     'angularFileUpload',
-    'ui.calendar'
+    'ui.calendar',
+    'ui.sortable',
+    'xeditable'
   ])
   .config(function($authProvider, ENV) {
     $authProvider.configure({
@@ -46,6 +48,12 @@ angular
       }
     });
 
+  })
+  .config(function($nestableProvider) {
+    $nestableProvider.defaultOptions({
+      expandBtnHTML: '<button class="nestable-expand-btn" data-action="expand">Expand></button>',
+      collapseBtnHTML: '<button class="nestable-collapse-btn" data-action="collapse">Collapse</button>'
+    });
   })
   .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -80,10 +88,22 @@ angular
             return $auth.validateUser();
           }
         }
+      })
+      .state('asset', {
+        url: '/band/:bandId/asset-list/:assetListId/asset/:id',
+        templateUrl: 'views/asset.html',
+        controller: 'AssetCtrl',
+        resolve: {
+          auth: function($auth) {
+            return $auth.validateUser();
+          }
+        }
       });
   }).run(function($rootScope, flash) {
     $rootScope.logOut = function() {
       flash.success = "You have been logged out."
       $rootScope.signOut();
     };
+  }).run(function(editableOptions) {
+    editableOptions.theme = 'bs3';
   });

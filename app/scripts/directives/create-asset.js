@@ -51,7 +51,7 @@ angular.module('manageBandApp')
         loadNewAsset();
 
         scope.createAsset = function() {
-          scope.assetList.assets.push(scope.newAsset);
+          scope.assetList.assets_without_parent.push(scope.newAsset);
           Asset.create(scope.band, scope.assetList, scope.newAsset.item);
           loadNewAsset();
         };
