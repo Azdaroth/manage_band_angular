@@ -3,7 +3,28 @@
 describe('Directive: asset', function () {
 
   // load the directive's module
-  beforeEach(module('manageBandApp'));
+  beforeEach(function() {
+    module('manageBandApp');
+
+    var auth = function() {
+      return {
+        retrieveData: function() {}
+      }
+    };
+
+    function FakeUploader() {
+      var fakedUploader = function FileUploader() {};
+      var fileSelect = function FileSelect() {};
+      fakedUploader.FileSelect = fileSelect;
+      return fakedUploader;
+    };
+
+    module(function($provide) {
+      $provide.service('$auth', auth);
+      $provide.factory('FileUploader', FakeUploader);
+    });
+
+  });
 
   var element,
       rootScope,
@@ -35,17 +56,41 @@ describe('Directive: asset', function () {
     scope.band = band;
     scope.assetList = assetList;
     scope.asset = asset;
+    scope.asset.tag_list = ["tag"];
     scope.$digest();
   }));
 
-  it('calls Asset service with update method', function () {
-    element.isolateScope().updateAssetName("new name");
-    expect(Asset.update).toHaveBeenCalledWith(band, assetList, asset, { name: "new name" });
+  describe('updateAssetName', function() {
+
+    it('calls Asset service with update method', function () {
+      element.isolateScope().updateAssetName("new name");
+      expect(Asset.update).toHaveBeenCalledWith(band, assetList, asset, { name: "new name", tag_list : ['tag'] });
+    });
+
+    it('broadcasts reload-asset-list event with assetList', function () {
+      element.isolateScope().updateAssetName("new name");
+      scope.$digest();
+      expect(rootScope.$broadcast).toHaveBeenCalledWith('reload-asset-list', assetList);
+    });
+
   });
 
-  it('broadcasts reload-asset-list event with updaed', function () {
-    element.isolateScope().updateAssetName("new name");
-    scope.$digest();
-    expect(rootScope.$broadcast).toHaveBeenCalledWith('reload-asset-list', assetList);
+  describe('updateAssetTags', function() {
+
+    it('calls Asset service with update method with tags in format of array of strings', function () {
+      scope.asset.tag_list = ["new", "tags"];
+      scope.$digest();
+      element.isolateScope().updateAssetTags();
+      expect(Asset.update).toHaveBeenCalledWith(band, assetList, asset, { name: "new name", tag_list: ['new', 'tags'] });
+    });
+
+    it('broadcasts reload-asset-list event with assetList', function () {
+      element.isolateScope().updateAssetTags();
+      scope.$digest();
+      expect(rootScope.$broadcast).toHaveBeenCalledWith('reload-asset-list', assetList);
+    });
+
   });
+
+
 });

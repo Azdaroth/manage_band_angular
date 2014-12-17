@@ -2,12 +2,12 @@
   <h3 class="modal-title">Edit {{asset.item.name}}</h3>
 </div>
 <div class="modal-body">
-  <div flash-alert active-class="in" class="alert fade" ng-if="flash">
+  <div flash-alert active-class="in" class="alert fade" ng-show="flash.message">
     <span class="alert-message">{{flash.message}}</span>
   </div>
 
   <asset band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></asset>
-  <update-asset-file band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></update-asset-file>
+
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="$close(true)">OK</button>

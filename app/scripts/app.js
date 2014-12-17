@@ -29,7 +29,8 @@ angular
     'ui.calendar',
     'ui.sortable',
     'xeditable',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngTagsInput'
   ])
   .config(function($authProvider, ENV) {
     $authProvider.configure({

@@ -23,7 +23,8 @@
     "angular-ui-sortable": "latest",
     "angular-xeditable": "latest",
     "components-font-awesome": "latest",
-    "angular-bootstrap": "latest"
+    "angular-bootstrap": "latest",
+    "ng-tags-input": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

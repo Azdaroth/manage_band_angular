@@ -7,13 +7,16 @@ describe('Controller: BandCtrl', function () {
 
   var BandCtrl,
       scope,
+      rootScope,
       stateParams,
       Band,
       Asset,
       AssetList,
       band,
       assetList,
-      assetLists;
+      reloadedAssetList,
+      assetLists,
+      q;
 
   stateParams = {
     id: "1"
@@ -24,11 +27,14 @@ describe('Controller: BandCtrl', function () {
   };
 
   assetList = { id: "3" };
+  reloadedAssetList = { id: "3", name: "name" };
 
   assetLists = [assetList];
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $q, _Asset_) {
+    q = $q;
+    rootScope = $rootScope;
     Band = {
       find: function(id) {
         var deferred = $q.defer();
@@ -41,8 +47,16 @@ describe('Controller: BandCtrl', function () {
         var deferred = $q.defer();
         deferred.resolve(assetLists);
         return deferred.promise;
+      },
+      find: function() {
+
       }
     };
+    spyOn(AssetList, 'find').andCallFake(function() {
+      var deferred = q.defer();
+      deferred.resolve(reloadedAssetList);
+      return deferred.promise;
+    });
     Asset = _Asset_;
     scope = $rootScope.$new();
     BandCtrl = $controller('BandCtrl', {
@@ -66,6 +80,19 @@ describe('Controller: BandCtrl', function () {
       var assetsTree = { item: { id: "10" }, children: [] };
       scope.assetChanged(assetList, assetsTree);
       expect(Asset.link).toHaveBeenCalledWith(band, assetList, assetsTree)
+    });
+  });
+
+  describe('reload-asset-list event being broadcasted', function() {
+    it('calls AssetList service to find assetlist by id', function() {
+      rootScope.$broadcast('reload-asset-list', { id: "10" });
+      expect(AssetList.find).toHaveBeenCalledWith(band, "10");
+    });
+
+    it('finds assetlist by id and substitus old one in list of all asset lists', function() {
+      rootScope.$broadcast('reload-asset-list', { id: "10" });
+      scope.$digest();
+      expect(scope.assetLists[0].name).toEqual("name")
     });
   });
 
