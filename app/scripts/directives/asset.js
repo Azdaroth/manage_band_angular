@@ -7,7 +7,7 @@
  * # asset
  */
 angular.module('manageBandApp')
-  .directive('asset', function (Asset) {
+  .directive('asset', function (Asset, $rootScope) {
     return {
       template: '<span class="asset-name-editable-wrapper"><b>' +
                   '<a href="#" editable-text="asset.name" onbeforesave="updateAssetName($data)">{{ asset.name || "empty" }}</a>' +
@@ -26,7 +26,9 @@ angular.module('manageBandApp')
         };
 
         var updateAsset = function(params) {
-          Asset.update(scope.band, scope.assetList, scope.asset, params);
+          Asset.update(scope.band, scope.assetList, scope.asset, params).then(function() {
+            $rootScope.$broadcast('reload-asset-list', scope.assetList);
+          });
         };
 
       }

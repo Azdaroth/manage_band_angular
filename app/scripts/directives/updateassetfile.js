@@ -7,7 +7,7 @@
  * # updateAssetFile
  */
 angular.module('manageBandApp')
-  .directive('updateAssetFile', function (Asset, UploadersFactory, flash) {
+  .directive('updateAssetFile', function ($rootScope, Asset, UploadersFactory, flash) {
     return {
       template:
       '<div class="form-group" ng-if="uploader">' +
@@ -42,9 +42,11 @@ angular.module('manageBandApp')
           scope.asset.asset_attachment_id = response.id
           var params = scope.asset;
           Asset.update(scope.band, scope.assetList, scope.asset, params).then(function(assetResponse) {
+            $rootScope.$broadcast('reload-asset-list', scope.assetList);
             scope.asset = assetResponse.asset.item;
             flash.success = "The file has been updated.";
           });
+
         };
 
       }

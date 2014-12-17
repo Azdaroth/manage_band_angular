@@ -28,6 +28,7 @@ describe('Directive: updateAssetFile', function () {
 
   var element,
       scope,
+      rootScope,
       band,
       assetList,
       asset,
@@ -58,6 +59,8 @@ describe('Directive: updateAssetFile', function () {
   };
 
   beforeEach(inject(function ($rootScope, $compile, $q, _Asset_, _UploadersFactory_, _flash_) {
+    rootScope = $rootScope;
+    spyOn(rootScope, '$broadcast');
     scope = $rootScope.$new();
     scope.band = band;
     scope.assetList = assetList;
@@ -85,9 +88,10 @@ describe('Directive: updateAssetFile', function () {
     expect(element.isolateScope().asset).toEqual( { id: "3", asset_attachment_id: "100" } );
   });
 
-  it('calls Asset service to update, reassigns asset and assigns flash message', function() {
+  it('calls Asset service to update, brodcasts reload-asset-list event reassigns asset and assigns flash message', function() {
     element.isolateScope().uploader.onCompleteItem(fileItem, { id: "100" });
     scope.$digest();
+    expect(rootScope.$broadcast).toHaveBeenCalledWith('reload-asset-list', assetList);
     expect(element.isolateScope().asset).toEqual( { name: "updated" } );
     expect(flash.success).toEqual("The file has been updated.")
   });

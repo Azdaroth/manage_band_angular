@@ -1,9 +1,14 @@
-<div flash-alert active-class="in" class="alert fade">
-  <span class="alert-message">{{flash.message}}</span>
+<div class="modal-header">
+  <h3 class="modal-title">Edit {{asset.item.name}}</h3>
 </div>
+<div class="modal-body">
+  <div flash-alert active-class="in" class="alert fade" ng-if="flash">
+    <span class="alert-message">{{flash.message}}</span>
+  </div>
 
-<div>
-  <a ui-sref="band({id: band.id})">Back to the {{band.name}}</a>
+  <asset band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></asset>
+  <update-asset-file band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></update-asset-file>
 </div>
-<asset band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></asset>
-<update-asset-file band="band" asset-list="assetList" asset="asset.item" ng-if="asset"></update-asset-file>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="$close(true)">OK</button>
+</div>

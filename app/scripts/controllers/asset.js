@@ -14,7 +14,7 @@ angular.module('manageBandApp')
       $scope.band = band;
       AssetList.find(band, $stateParams.assetListId).then(function(assetList) {
         $scope.assetList = assetList;
-        Asset.find(band, assetList, $stateParams.id).then(function(asset) {
+        Asset.find(band, assetList, $stateParams.assetId).then(function(asset) {
           $scope.asset = asset;
         });
       });

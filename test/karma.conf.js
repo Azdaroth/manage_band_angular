@@ -39,6 +39,7 @@ module.exports = function(config) {
       'bower_components/angular-ui-calendar/src/calendar.js',
       'bower_components/angular-ui-sortable/sortable.js',
       'bower_components/angular-xeditable/dist/js/xeditable.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

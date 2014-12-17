@@ -28,7 +28,8 @@ angular
     'angularFileUpload',
     'ui.calendar',
     'ui.sortable',
-    'xeditable'
+    'xeditable',
+    'ui.bootstrap'
   ])
   .config(function($authProvider, ENV) {
     $authProvider.configure({
@@ -80,7 +81,7 @@ angular
         controller: 'AboutCtrl'
       })
       .state('band', {
-        url: '/band/:id',
+        url: '/band/:bandId',
         templateUrl: 'views/band.html',
         controller: 'BandCtrl',
         resolve: {
@@ -89,10 +90,19 @@ angular
           }
         }
       })
-      .state('asset', {
-        url: '/band/:bandId/asset-list/:assetListId/asset/:id',
-        templateUrl: 'views/asset.html',
-        controller: 'AssetCtrl',
+      .state('band.asset', {
+        url: '/asset-list/:assetListId/asset/:assetId',
+        onEnter: function($modal, $state, $stateParams) {
+          $modal.open({
+            size: 'lg',
+            controller: 'AssetCtrl',
+            templateUrl: 'views/asset.html'
+          }).result.then(function(result) {
+            if (result) {
+              return $state.transitionTo("band", { bandId: $stateParams.bandId });
+            }
+          });
+        },
         resolve: {
           auth: function($auth) {
             return $auth.validateUser();
