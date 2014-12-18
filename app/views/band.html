@@ -21,14 +21,20 @@
 
 <div ui-calendar ng-model="eventSources"></div>
 
-<div class="task-lists-wrapper row">
-  <div class='tasklist col-sm-3' ng-repeat='taskList in taskLists'>
-      <h2>{{ taskList.name }}</h2>
-      <ul ui-sortable="sortableOptions" ng-model="taskList.items" class="tasklist-items">
-        <li ng-if="taskList.items.length === 0" class="empty-task-list-placeholder"></li>
-        <li ng-repeat="item in taskList.items">
-          {{ item.name }}
-        </li>
-      </ul>
+<div class="tasklists-wrapper row">
+  <div class="clearfix">
+    <div class='col-sm-3' ng-repeat='taskList in taskLists'>
+      <div class="tasklist">
+        <h4>{{ taskList.name }}</h4>
+        <ul ui-sortable="sortableOptions" ng-model="taskList.tasks" class="tasklist-tasks">
+          <li ng-if="taskList.tasks.length === 0" class="empty-task-list-placeholder"></li>
+          <li class="task" ng-repeat="task in taskList.tasks">
+            {{ task.name }}
+          </li>
+        </ul>
+        <a ui-sref="band.newTask({bandId: band.id, taskListId: taskList.id})">Add new task</a>
+      </div>
+    </div>
   </div>
+  <create-task-list band="band" task-lists="taskLists"></create-task-list>
 </div>

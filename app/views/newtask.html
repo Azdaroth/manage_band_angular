@@ -1,0 +1,10 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add task to {{taskList.name}}</h3>
+</div>
+<div class="modal-body">
+  <create-task band="band" task-list="taskList" ng-if="taskList"></create-task>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="$close(true)">OK</button>
+</div>
+

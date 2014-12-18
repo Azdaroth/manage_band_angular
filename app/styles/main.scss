@@ -97,5 +97,22 @@ body {
   height: 10px;
 }
 
-
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.tasklists-wrapper {
+  .col-sm-3 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .tasklist-tasks {
+    height: 220px;
+    overflow: scroll;
+  }
+}
+
+.tasklist {
+  border: 1px solid #000;
+  height: 300px;
+  margin: 5px;
+  padding: 10px;
+}

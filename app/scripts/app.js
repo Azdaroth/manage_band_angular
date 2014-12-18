@@ -109,6 +109,25 @@ angular
             return $auth.validateUser();
           }
         }
+      })
+      .state('band.newTask', {
+        url: '/task-list/:taskListId/task/new',
+        onEnter: function($modal, $state, $stateParams) {
+          $modal.open({
+            size: 'lg',
+            controller: 'NewTaskCtrl',
+            templateUrl: 'views/newtask.html'
+          }).result.then(function(result) {
+            if (result) {
+              return $state.transitionTo("band", { bandId: $stateParams.bandId });
+            }
+          });
+        },
+        resolve: {
+          auth: function($auth) {
+            return $auth.validateUser();
+          }
+        }
       });
   }).run(function($rootScope, flash) {
     $rootScope.logOut = function() {

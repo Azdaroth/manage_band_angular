@@ -8,12 +8,15 @@
  * Controller of the manageBandApp
  */
 angular.module('manageBandApp')
-  .controller('BandCtrl', function ($scope, $stateParams, Band, AssetList, Asset) {
+  .controller('BandCtrl', function ($scope, $stateParams, Band, AssetList, Asset, TaskList) {
 
     Band.find($stateParams.bandId).then(function(band) {
       $scope.band = band;
       AssetList.all(band).then(function(assetLists) {
         $scope.assetLists = assetLists
+      });
+      TaskList.all(band).then(function(taskLists) {
+        $scope.taskLists = taskLists;
       });
     });
 
@@ -26,6 +29,14 @@ angular.module('manageBandApp')
         var oldAssetList = _.where($scope.assetLists, { id: reloadedAssetList.id })[0];
         var indexOfOldAssetList = $scope.assetLists.indexOf(oldAssetList);
         $scope.assetLists[indexOfOldAssetList] = reloadedAssetList;
+      });
+    });
+
+    $scope.$on('reload-task-list', function(ev, taskList) {
+      TaskList.find($scope.band, taskList.id).then(function(reloadedTaskList) {
+        var oldTaskList = _.where($scope.taskLists, { id: reloadedTaskList.id })[0];
+        var indexOfOldTaskList = $scope.taskLists.indexOf(oldTaskList);
+        $scope.taskLists[indexOfOldTaskList] = reloadedTaskList;
       });
     });
 
@@ -50,11 +61,8 @@ angular.module('manageBandApp')
 
     $scope.eventSources = [];
 
-    $scope.taskLists = [
-    ]
-
     $scope.sortableOptions = {
-      connectWith: '.tasklist-items',
+      connectWith: '.tasklist-tasks',
       placeholder: 'placeholder',
       update: function(event, ui) {
 
