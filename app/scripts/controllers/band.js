@@ -8,7 +8,7 @@
  * Controller of the manageBandApp
  */
 angular.module('manageBandApp')
-  .controller('BandCtrl', function ($scope, $stateParams, Band, AssetList, Asset, TaskList) {
+  .controller('BandCtrl', function ($scope, $stateParams, Band, AssetList, Asset, TaskList, Task) {
 
     Band.find($stateParams.bandId).then(function(band) {
       $scope.band = band;
@@ -64,11 +64,10 @@ angular.module('manageBandApp')
     $scope.sortableOptions = {
       connectWith: '.tasklist-tasks',
       placeholder: 'placeholder',
-      update: function(event, ui) {
-
-      },
       beforeStop: function(event, ui) {
-
+        var task = ui.helper.find('span').data('task');
+        var listId = ui.helper.closest('.tasklist').data('task-list-id');
+        Task.updateOnDrag($scope.band, listId, task, $scope.taskLists);
       }
     }
 

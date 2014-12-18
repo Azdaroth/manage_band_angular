@@ -41,10 +41,25 @@ angular.module('manageBandApp')
         .remove();
     };
 
+    var updateOnDrag = function(band, newListId, task, taskLists) {
+      var params = { list_id: newListId };
+      var taskList = { id: task.list_id };
+      update(band, taskList, task, params).then(function(response) {
+        var newTaskList = {
+          id: newListId
+        };
+        _.findWhere(taskLists, newTaskList).tasks.forEach(function(task, index) {
+          task.position = index + 1;
+          update(band, newTaskList, task, { position: index + 1 });
+        });
+      });
+    };
+
     return {
       find: find,
       create: create,
       update: update,
+      updateOnDrag: updateOnDrag,
       destroy: destroy
     };
   });

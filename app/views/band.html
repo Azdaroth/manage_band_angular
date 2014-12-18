@@ -24,12 +24,12 @@
 <div class="tasklists-wrapper row">
   <div class="clearfix">
     <div class='col-sm-3' ng-repeat='taskList in taskLists'>
-      <div class="tasklist">
+      <div class="tasklist" data-task-list-id="{{taskList.id}}">
         <h4>{{ taskList.name }}</h4>
         <ul ui-sortable="sortableOptions" ng-model="taskList.tasks" class="tasklist-tasks">
           <li ng-if="taskList.tasks.length === 0" class="empty-task-list-placeholder"></li>
-          <li class="task" ng-repeat="task in taskList.tasks">
-            {{ task.name }}
+          <li data-task-id class="task" ng-repeat="task in taskList.tasks">
+            <span data-task="{{task}}">{{ task.name }}</span>
           </li>
         </ul>
         <a ui-sref="band.newTask({bandId: band.id, taskListId: taskList.id})">Add new task</a>

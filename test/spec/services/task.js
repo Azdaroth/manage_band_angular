@@ -9,12 +9,14 @@ describe('Service: Task', function () {
     id: "1"
   };
 
-  var taskList = {
-    id: "2"
+  var task = {
+    id: "3",
+    list_id: "2"
   };
 
-  var task = {
-    id: "3"
+  var taskList = {
+    id: "2",
+    tasks: [task]
   };
 
   // instantiate service
@@ -26,6 +28,10 @@ describe('Service: Task', function () {
       { task: { name: "name" } }).respond("created");
     httpBackend.when('PATCH', 'http://manage_band.dev/api/v1/bands/1/task_lists/2/tasks/3.json',
       { task: { name: "name" } }).respond("updated");
+    httpBackend.when('PATCH', 'http://manage_band.dev/api/v1/bands/1/task_lists/2/tasks/3.json',
+      { task: { list_id: "4" } }).respond("updated");
+    httpBackend.when('PATCH', 'http://manage_band.dev/api/v1/bands/1/task_lists/4/tasks/3.json',
+      { task: { position: 1 } }).respond("updated");
     httpBackend.when('GET', 'http://manage_band.dev/api/v1/bands/1/task_lists/2/tasks/3.json')
       .respond({ tasks: task } );
     httpBackend.when('DELETE', 'http://manage_band.dev/api/v1/bands/1/task_lists/2/tasks/3.json')
@@ -66,6 +72,28 @@ describe('Service: Task', function () {
       });
       httpBackend.flush();
     });
+  });
+
+  describe('updateOnDrag', function() {
+
+    var otherTaskList = {
+      id: "4",
+      tasks: [task]
+    };
+    var taskLists = [otherTaskList];
+
+    it('updates task in previous task list with new task list id param', function() {
+      Task.updateOnDrag(band, "4", task, taskLists);
+      httpBackend.expectPATCH("http://manage_band.dev/api/v1/bands/1/task_lists/2/tasks/3.json", { task: { list_id: "4" } });
+      httpBackend.flush();
+    });
+
+    it('updates positions in new task list', function() {
+      Task.updateOnDrag(band, "4", task, taskLists);
+      httpBackend.expectPATCH("http://manage_band.dev/api/v1/bands/1/task_lists/4/tasks/3.json", { task: { position: 1 } });
+      httpBackend.flush();
+    });
+
   });
 
 });
